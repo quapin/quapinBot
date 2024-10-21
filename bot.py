@@ -202,4 +202,4 @@ async def commands(ctx):
 
 
 # Start and run the bot
-bot.run('MTI5NzY2Njg3OTU4MTU4NTUzMQ.Gsz7_N.eCmmFEOf1krCyujArSYW4BLcMkNx6KIih43bB0')
+bot.run('TOKEN')
