@@ -9,6 +9,7 @@ from datetime import datetime
 import pandas as pd
 from grt_schedule import GRTSchedule
 from mineGame import Mines
+import lastfm_tracker
 
 # Initialize intents
 intents = discord.Intents.default()
@@ -476,8 +477,8 @@ async def leaderboard(ctx):
 # START OF GRT BOT
 grt_schedule = GRTSchedule(gtfs_path='gtfs_data/')
 
-@bot.command()
-async def grt(ctx, route_number: str, *, stop_name: str):
+@bot.command(alias=['bus'])
+async def go(ctx, route_number: str, *, stop_name: str):
     response = grt_schedule.get_next_arrivals(route_number, stop_name)
     await ctx.send(response)
 # END OF GRT BOT
@@ -658,14 +659,16 @@ async def play_mines_game(ctx, mines_game):
 async def commands(ctx):
     embed = discord.Embed(title="Commands", description="List of available commands")
     embed.add_field(name="-blackjack <bet>", value="Start a new Blackjack game with the specified bet amount.", inline=False)
+    embed.add_field(name="-mines <grid-size> <mine-ct> <bet>" , value="Start a new Mines game with the specified grid size, mine count, and bet amount. \"x,y\" to choose coordinates.", inline=False)
     embed.add_field(name="-hourly", value="Claim your hourly reward. (Once per hour)", inline=False)
     embed.add_field(name="-daily", value="Claim your daily reward. (Once per day)", inline=False)
     embed.add_field(name="-balance", value="Check your current balance.", inline=False)
     embed.add_field(name="-give ``recipient`` ``amount``", value="Give a specified amount to another user.", inline=False)
     embed.add_field(name="-baladd <amount>", value="Add a specified amount to your balance. (Admin use)", inline=False)
     embed.add_field(name="-leaderboard", value="Display the top 10 players on the leaderboard.", inline=False)
-    embed.add_field(name="-grt <route_number> <stop_name>", value="Get the next arrival times for a GRT bus at a specific stop.", inline=False)
+    embed.add_field(name="-go <route_number> <stop_name>", value="Get the next arrival times for a GO Bus or Train at a specific stop.", inline=False)
+
     await ctx.send(embed=embed) 
 
 # Run the bot
-bot.run("KEY") # Removed for security
+bot.run("") # Removed for security
